@@ -1,8 +1,12 @@
 import pandas as pd
 import json
 import pathlib as pl
-import os
+# import os
 import re
+import pathlib
+import pydicom
+from pydicom.pixel_data_handlers.util import apply_voi_lut
+from tqdm import tqdm
 
 def generate_prompts(txt_path, json_path):
     txt_path = pl.Path(txt_path)
@@ -36,7 +40,8 @@ def generate_prompts(txt_path, json_path):
         prompt_data = {
             "ID": id,
             "SIDE": side,
-            "PROMPT": prompt_text
+            "PROMPT": prompt_text,
+            "KL_GRADE": kl_grade
         }
         prompts.append(prompt_data)
 
@@ -49,6 +54,17 @@ def generate_prompts(txt_path, json_path):
     
     return prompts
 
+def dicom_validity(path): # In path variable provide path to X-ray image
+    path=path.replace('_1x1.jpg','')+'/001'
+    file_name = pathlib.Path(path)
+    try:
+        ds = pydicom.dcmread(str(file_name))
+        if 'BodyPartExamined' in ds and ds.BodyPartExamined == 'KNEE':
+            return True
+    except KeyError:
+        pass
+    return False    
+
 def search_jpg_files(directory):
     if not directory.exists():
         return None 
@@ -56,7 +72,7 @@ def search_jpg_files(directory):
     for file_path in directory.iterdir():
         if file_path.is_dir():
             for sub_file in file_path.iterdir():
-                if sub_file.is_file() and re.search(r"1x1\.jpg$", sub_file.name):
+                if sub_file.is_file() and re.search(r"1x1\.jpg$", sub_file.name) and dicom_validity(str(file_path)+'/'+sub_file.name):
                     return sub_file
     return None
 
@@ -66,28 +82,28 @@ def searchTextAndUpdateJson(json_path):
         prompts = json.load(f)
     
     image_count = 0  
-
-    for prompt in prompts:
+    loop = tqdm(prompts, total=len(prompts), leave=False)
+    for prompt in loop:
         patient_id = prompt['ID']
 
         path_1 = pl.Path(f"./datasets/OAI12Month/downloads/results/1.C.2/{patient_id}")
         path_2 = pl.Path(f"./datasets/OAI12Month/downloads/results/1.E.1/{patient_id}")
 
-        image_path = search_jpg_files(path_1)
-        
+        image_path = search_jpg_files(path_2)
         if not image_path:
-            image_path = search_jpg_files(path_2)
+            image_path = search_jpg_files(path_1)
         
         if image_path:
-            prompt['Image'] = str(image_path)
+            prompt['IMAGE'] = str(image_path)
             image_count += 1  
+            
+        loop.set_postfix(image_path=image_path)
 
     with open(json_path, 'w') as f:
         json.dump(prompts, f, indent=4)
 
     print(f"Updated prompts have been saved to {json_path}, total image paths added: {image_count}")
     
-
 
 prompts = generate_prompts("kxr_sq_bu01.txt", "prompts.json")
 json_path = "prompts.json"   
