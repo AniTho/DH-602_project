@@ -1,0 +1,68 @@
+** Config **
+adapter: False
+adapter_dim: None
+adaptformer: True
+backbone: CLIP-ViT-B/16
+batch_size: 128
+bias_tuning: False
+bn_tuning: False
+classifier: CosineClassifier
+dataset: KneeOA
+deterministic: True
+expand: 24
+full_tuning: False
+gpu: 0
+imb_factor: None
+init_head: text_feat
+ln_tuning: False
+lora: False
+loss_type: LA
+lr: 0.01
+micro_batch_size: 128
+model_dir: None
+momentum: 0.9
+num_epochs: 10
+num_workers: 8
+output_dir: ./output/kneeoa_clip_vit_b16_peft
+partial: None
+prec: amp
+print_freq: 10
+resolution: 224
+root: /home/padma/DH-602_project/datasets/kneeOA/KneeXrayData/ClsKLData/kneeKL224
+scale: 25
+seed: 0
+ssf_attn: False
+ssf_ln: False
+ssf_mlp: False
+test_ensemble: True
+test_only: False
+test_train: False
+vpt_deep: False
+vpt_len: None
+vpt_shallow: False
+weight_decay: 0.0005
+zero_shot: False
+************
+Setting fixed seed: 0
+mean: [0.48145466, 0.4578275, 0.40821073]
+std: [0.26862954, 0.26130258, 0.27577711]
+Total training points: 5778
+Building model
+Loading CLIP (backbone: CLIP-ViT-B/16)
+Adapter bottle dimension set to 1
+Turning off gradients in the model
+Turning on gradients in the tuner
+Turning on gradients in the head
+Total params: 149670680
+Tuned params: 46104
+Head params: 3840
+Initialize head with text features
+Initialize tensorboard (log_dir=./output/kneeoa_clip_vit_b16_peft/tensorboard)
+epoch [1/10] batch [10/46] time 0.298 (0.723) data 0.000 (0.387) loss 1.5555 (1.4091) acc 20.3125 (32.4957) (mean 20.8352 many 20.8352 med nan few nan) lr 1.0000e-02 eta 0:05:25
+epoch [1/10] batch [20/46] time 0.300 (0.515) data 0.000 (0.193) loss 1.5562 (1.4701) acc 28.1250 (27.9112) (mean 22.0984 many 22.0984 med nan few nan) lr 1.0000e-02 eta 0:03:46
+epoch [1/10] batch [30/46] time 0.300 (0.444) data 0.001 (0.129) loss 1.4630 (1.4997) acc 39.0625 (24.4360) (mean 27.2639 many 27.2639 med nan few nan) lr 1.0000e-02 eta 0:03:10
+epoch [1/10] batch [40/46] time 0.301 (0.408) data 0.000 (0.097) loss 1.3917 (1.4082) acc 41.4062 (31.7929) (mean 29.2419 many 29.2419 med nan few nan) lr 1.0000e-02 eta 0:02:51
+epoch [2/10] batch [10/46] time 0.300 (0.421) data 0.000 (0.117) loss 1.2608 (1.3117) acc 27.3438 (31.9959) (mean 26.3402 many 26.3402 med nan few nan) lr 9.7553e-03 eta 0:02:49
+epoch [2/10] batch [20/46] time 0.302 (0.403) data 0.000 (0.100) loss 1.3106 (1.3179) acc 25.0000 (34.2486) (mean 27.4791 many 27.4791 med nan few nan) lr 9.7553e-03 eta 0:02:38
+epoch [2/10] batch [30/46] time 0.301 (0.389) data 0.001 (0.087) loss 1.2965 (1.3007) acc 34.3750 (33.0663) (mean 32.2231 many 32.2231 med nan few nan) lr 9.7553e-03 eta 0:02:29
+epoch [2/10] batch [40/46] time 0.302 (0.379) data 0.000 (0.076) loss 1.1659 (1.2690) acc 42.9688 (35.2913) (mean 41.1892 many 41.1892 med nan few nan) lr 9.7553e-03 eta 0:02:21
