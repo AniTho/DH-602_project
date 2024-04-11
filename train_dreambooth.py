@@ -420,13 +420,13 @@ def get_full_repo_name(model_id: str, organization: Optional[str] = None, token:
 
 
 def main(args):
-    logging_dir = Path(args.output_dir, "0", args.logging_dir)
+    project_dir = Path(args.output_dir, "0", args.logging_dir)
 
     accelerator = Accelerator(
         gradient_accumulation_steps=args.gradient_accumulation_steps,
         mixed_precision=args.mixed_precision,
-        log_with="tensorboard",
-        project_dir=logging_dir,
+        log_with="wandb",
+        project_dir=project_dir,
     )
 
     logging.basicConfig(
@@ -549,11 +549,11 @@ def main(args):
     if not args.train_text_encoder:
         text_encoder.requires_grad_(False)
 
-    if is_xformers_available():
-        vae.enable_xformers_memory_efficient_attention()
-        unet.enable_xformers_memory_efficient_attention()
-    else:
-        logger.warning("xformers is not available. Make sure it is installed correctly")
+    # if is_xformers_available():
+    #     vae.enable_xformers_memory_efficient_attention()
+    #     unet.enable_xformers_memory_efficient_attention()
+    # else:
+    #     logger.warning("xformers is not available. Make sure it is installed correctly")
 
     if args.gradient_checkpointing:
         unet.enable_gradient_checkpointing()

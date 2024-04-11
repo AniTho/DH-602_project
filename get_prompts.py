@@ -59,7 +59,7 @@ def dicom_validity(path): # In path variable provide path to X-ray image
     file_name = pathlib.Path(path)
     try:
         ds = pydicom.dcmread(str(file_name))
-        if 'BodyPartExamined' in ds and ds.BodyPartExamined == 'KNEE':
+        if 'BodyPartExamined' in ds and ds.BodyPartExamined == 'KNEE' and 'SeriesDescription' in ds and ds.SeriesDescription.find('Bilateral') != -1:
             return True
     except KeyError:
         pass
