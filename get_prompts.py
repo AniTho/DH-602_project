@@ -35,7 +35,7 @@ def generate_prompts(txt_path, json_path):
 
         # prompt_text = f"Generate a high-resolution X-ray image of the knee showing detailed anatomy with the following pathological features based on Kellgren and Lawrence grade (KL Grade): {kl_grade}, depicting {kl_description} Joint space narrowing in the lateral compartment: {jsn_lateral}, and medial compartment: {jsn_medial} reflecting cartilage degradation. Ensure clear visibility of bone contours, joint space, and any relevant pathological features indicative of the specified grades."
 
-        prompt_text = f"Generate a high-resolution X-ray image of the knee showing detailed anatomy with the following pathological features based on Kellgren and Lawrence grade (KL Grade): {kl_grade}, depicting {kl_description} Ensure clear visibility of bone contours, joint space, and any relevant pathological features indicative of the specified grades."
+        prompt_text = f"Generate a high-resolution X-ray image of the knee with Kellgren and Lawrence grade (KL Grade): {kl_grade}, depicting {kl_description}"
 
         prompt_data = {
             "ID": id,
@@ -105,8 +105,8 @@ def searchTextAndUpdateJson(json_path):
     print(f"Updated prompts have been saved to {json_path}, total image paths added: {image_count}")
     
 
-prompts = generate_prompts("kxr_sq_bu01.txt", "prompts.json")
-json_path = "prompts.json"   
+prompts = generate_prompts("kxr_sq_bu01.txt", "prompts_1.json")
+json_path = "prompts_1.json"   
 searchTextAndUpdateJson(json_path)
 
 

@@ -4,7 +4,7 @@ import shutil
 from tqdm import tqdm
 from PIL import Image
 
-def parse_json_and_prepare_data(json_path):
+def get_concepts_list(json_path):
     # Read JSON data
     with open(json_path, 'r') as file:
         data = json.load(file)
@@ -21,14 +21,14 @@ def parse_json_and_prepare_data(json_path):
         prompt = item["PROMPT"]
         
         # Create directories if they don't already exist
-        class_data_dir = os.path.join(base_dir, kl_grade)
+        instance_data_dir = os.path.join(base_dir, kl_grade)
 
         # Add concept for this instance if not already added
         concept = {
-            "class_prompt": prompt,  
+            "class_prompt": 'a high-resolution X-ray image of the knee',  
             "instance_prompt": prompt,
-            "instance_data_dir": class_data_dir,
-            "class_data_dir": class_data_dir
+            "instance_data_dir": instance_data_dir,
+            # "class_data_dir": class_data_dir
         }
         if concept not in concepts_list:
             concepts_list.append(concept)
@@ -46,10 +46,9 @@ def train_model():
       --pretrained_vae_name_or_path='stabilityai/sd-vae-ft-mse' \
       --output_dir='./stable_diffusion_weights' \
       --revision='fp16' \
-      --with_prior_preservation --prior_loss_weight=1.0 \
       --seed=1337 \
-      --resolution=512 \
-      --train_batch_size=1 \
+      --resolution=1024 \
+      --train_batch_size=4 \
       --train_text_encoder \
       --mixed_precision='fp16' \
       --use_8bit_adam \
@@ -58,16 +57,15 @@ def train_model():
       --learning_rate=2e-6 \
       --lr_scheduler='constant' \
       --lr_warmup_steps=0 \
-      --sample_batch_size=128 \
-      --max_train_steps=100 \
-      --save_interval=500 \
-      --not_cache_latents \
+      --sample_batch_size=256 \
+      --save_interval=100 \
+      --max_train_steps=5000 \
       --concepts_list='concepts_list.json'")
 
 # Setup parameters
-json_path = "prompts.json"
-output_dir = "./stable_diffusion_weights"
+json_path = "prompts_1.json"
+output_dir = "./stable_diffusion_weights_epoch_10"
 
 # Prepare data and train the model
-# parse_json_and_prepare_data(json_path)
+# get_concepts_list(json_path)
 train_model()

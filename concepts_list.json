@@ -1,32 +1,27 @@
 [
     {
-        "class_prompt": "Generate a high-resolution X-ray image of the knee showing detailed anatomy with the following pathological features based on Kellgren and Lawrence grade (KL Grade): 2.0, depicting Definite presence of osteophytes and possible joint space narrowing. Ensure clear visibility of bone contours, joint space, and any relevant pathological features indicative of the specified grades.",
-        "instance_prompt": "Generate a high-resolution X-ray image of the knee showing detailed anatomy with the following pathological features based on Kellgren and Lawrence grade (KL Grade): 2.0, depicting Definite presence of osteophytes and possible joint space narrowing. Ensure clear visibility of bone contours, joint space, and any relevant pathological features indicative of the specified grades.",
-        "instance_data_dir": "./datasets/processed_dataset/2",
-        "class_data_dir": "./datasets/processed_dataset/2"
+        "class_prompt": "a high-resolution X-ray image of the knee",
+        "instance_prompt": "Generate a high-resolution X-ray image of the knee with Kellgren and Lawrence grade (KL Grade): 2.0, depicting Definite presence of osteophytes and possible joint space narrowing..",
+        "instance_data_dir": "./datasets/processed_dataset/2"
     },
     {
-        "class_prompt": "Generate a high-resolution X-ray image of the knee showing detailed anatomy with the following pathological features based on Kellgren and Lawrence grade (KL Grade): 4.0, depicting Large osteophytes, significant joint narrowing, and severe sclerosis. Ensure clear visibility of bone contours, joint space, and any relevant pathological features indicative of the specified grades.",
-        "instance_prompt": "Generate a high-resolution X-ray image of the knee showing detailed anatomy with the following pathological features based on Kellgren and Lawrence grade (KL Grade): 4.0, depicting Large osteophytes, significant joint narrowing, and severe sclerosis. Ensure clear visibility of bone contours, joint space, and any relevant pathological features indicative of the specified grades.",
-        "instance_data_dir": "./datasets/processed_dataset/4",
-        "class_data_dir": "./datasets/processed_dataset/4"
+        "class_prompt": "a high-resolution X-ray image of the knee",
+        "instance_prompt": "Generate a high-resolution X-ray image of the knee with Kellgren and Lawrence grade (KL Grade): 4.0, depicting Large osteophytes, significant joint narrowing, and severe sclerosis..",
+        "instance_data_dir": "./datasets/processed_dataset/4"
     },
     {
-        "class_prompt": "Generate a high-resolution X-ray image of the knee showing detailed anatomy with the following pathological features based on Kellgren and Lawrence grade (KL Grade): 3.0, depicting Multiple osteophytes, definite joint space narrowing, with mild sclerosis. Ensure clear visibility of bone contours, joint space, and any relevant pathological features indicative of the specified grades.",
-        "instance_prompt": "Generate a high-resolution X-ray image of the knee showing detailed anatomy with the following pathological features based on Kellgren and Lawrence grade (KL Grade): 3.0, depicting Multiple osteophytes, definite joint space narrowing, with mild sclerosis. Ensure clear visibility of bone contours, joint space, and any relevant pathological features indicative of the specified grades.",
-        "instance_data_dir": "./datasets/processed_dataset/3",
-        "class_data_dir": "./datasets/processed_dataset/3"
+        "class_prompt": "a high-resolution X-ray image of the knee",
+        "instance_prompt": "Generate a high-resolution X-ray image of the knee with Kellgren and Lawrence grade (KL Grade): 3.0, depicting Multiple osteophytes, definite joint space narrowing, with mild sclerosis..",
+        "instance_data_dir": "./datasets/processed_dataset/3"
     },
     {
-        "class_prompt": "Generate a high-resolution X-ray image of the knee showing detailed anatomy with the following pathological features based on Kellgren and Lawrence grade (KL Grade): 1.0, depicting Doubtful joint narrowing with possible osteophytic lipping. Ensure clear visibility of bone contours, joint space, and any relevant pathological features indicative of the specified grades.",
-        "instance_prompt": "Generate a high-resolution X-ray image of the knee showing detailed anatomy with the following pathological features based on Kellgren and Lawrence grade (KL Grade): 1.0, depicting Doubtful joint narrowing with possible osteophytic lipping. Ensure clear visibility of bone contours, joint space, and any relevant pathological features indicative of the specified grades.",
-        "instance_data_dir": "./datasets/processed_dataset/1",
-        "class_data_dir": "./datasets/processed_dataset/1"
+        "class_prompt": "a high-resolution X-ray image of the knee",
+        "instance_prompt": "Generate a high-resolution X-ray image of the knee with Kellgren and Lawrence grade (KL Grade): 1.0, depicting Doubtful joint narrowing with possible osteophytic lipping..",
+        "instance_data_dir": "./datasets/processed_dataset/1"
     },
     {
-        "class_prompt": "Generate a high-resolution X-ray image of the knee showing detailed anatomy with the following pathological features based on Kellgren and Lawrence grade (KL Grade): 0.0, depicting Healthy knee image. Ensure clear visibility of bone contours, joint space, and any relevant pathological features indicative of the specified grades.",
-        "instance_prompt": "Generate a high-resolution X-ray image of the knee showing detailed anatomy with the following pathological features based on Kellgren and Lawrence grade (KL Grade): 0.0, depicting Healthy knee image. Ensure clear visibility of bone contours, joint space, and any relevant pathological features indicative of the specified grades.",
-        "instance_data_dir": "./datasets/processed_dataset/0",
-        "class_data_dir": "./datasets/processed_dataset/0"
+        "class_prompt": "a high-resolution X-ray image of the knee",
+        "instance_prompt": "Generate a high-resolution X-ray image of the knee with Kellgren and Lawrence grade (KL Grade): 0.0, depicting Healthy knee image..",
+        "instance_data_dir": "./datasets/processed_dataset/0"
     }
 ]

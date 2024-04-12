@@ -162,3 +162,4 @@ cython_debug/
 datasets
 stable_diffusion_weights
 wandb
+generated_imgs
