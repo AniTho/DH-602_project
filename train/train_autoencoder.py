@@ -177,11 +177,13 @@ def train_autoencoder(cfg, train_dataset, valid_dataset):
         
         images = next(iter(val_loader))["image"].to(device)
         reconstruction, z_mu, z_sigma = model(x=images)
-        log_reconstruction(images, reconstruction, epoch)
+        
         val_loss = val_running_loss / len(val_loader)
         
         print(f"Epoch: {epoch}, Train Loss: {train_loss:.5f}, Val Loss: {val_loss:.5f}")
         if val_loss < best_loss:
+            print('===== Saving =====')
+            log_reconstruction(images, reconstruction, epoch)
             best_loss = train_loss
             torch.save(model.state_dict(), os.path.join(cfg.TRAIN.MODEL_PATH,
                                                         cfg.stage1.BEST_MODEL_NAME))
