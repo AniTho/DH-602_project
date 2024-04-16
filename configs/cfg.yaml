@@ -1,0 +1,73 @@
+DATASET: KneeOA
+DATASET_PATH: ./datasets/knee_kaggle
+TRAIN_VAE: True
+TRAIN_DIFF: False
+TRAIN_CONTROL: False
+
+TRAIN:
+  SEED: 42
+  BATCH_SIZE: 8
+  NUM_WORKERS: 4
+  PIN_MEMORY: True
+  NUM_EPOCHS: 100
+  MODEL_PATH: ./checkpoints
+
+DATA:
+  IMAGE_SIZE: 224
+
+stage1:
+  loss: 'mae' # 'mae' or 'mse'
+  base_lr: 0.00005
+  disc_lr: 0.0001
+  perceptual_weight: 0.002
+  adv_weight: 0.005
+  kl_weight: 0.00000001
+  BEST_MODEL_NAME: 'best_model_stage1.pth'
+  CHECKPOINT_NAME: 'checkpoint_stage1.ckpt'
+  params:
+    spatial_dims: 2
+    in_channels: 1
+    out_channels: 1
+    num_channels: [64, 128, 128, 128]
+    latent_channels: 3
+    num_res_blocks: 2
+    attention_levels: [False, False, False, False]
+    with_encoder_nonlocal_attn: False
+    with_decoder_nonlocal_attn: False
+
+discriminator:
+  params:
+    spatial_dims: 2
+    num_channels: 64
+    num_layers_d: 3
+    in_channels: 1
+    out_channels: 1
+
+perceptual_network:
+  params:
+    spatial_dims: 2
+    network_type: "squeeze"
+
+ldm:
+  base_lr: 0.000025
+  CHECKPOINT_NAME: 'checkpoint_ldm.ckpt'
+  BEST_MODEL_NAME: 'best_model_ldm.pth'
+  params:
+    spatial_dims: 2
+    in_channels: 3
+    out_channels: 3
+    num_res_blocks: 2
+    num_channels: [256, 512, 768]
+    attention_levels: [False, True, True]
+    with_conditioning: True
+    cross_attention_dim: 1024
+    num_head_channels: [0, 512, 768]
+  scheduler:
+    schedule: "scaled_linear_beta"
+    num_train_timesteps: 1000
+    beta_start: 0.0015
+    beta_end: 0.0205
+    prediction_type: "v_prediction"
+
+text_encoder:
+  model_name: "stabilityai/stable-diffusion-2-1-base"
