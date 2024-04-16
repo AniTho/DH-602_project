@@ -6,6 +6,7 @@ from tqdm import tqdm
 from torch.cuda.amp import GradScaler, autocast
 import os
 from utils.utils import log_reconstruction
+from generative.metrics import MultiScaleSSIMMetric
 
 def train_autoencoder(cfg, train_dataset, valid_dataset):
     train_loader = DataLoader(train_dataset, batch_size=cfg.TRAIN.BATCH_SIZE, 
@@ -187,4 +188,19 @@ def train_autoencoder(cfg, train_dataset, valid_dataset):
             best_loss = train_loss
             torch.save(model.state_dict(), os.path.join(cfg.TRAIN.MODEL_PATH,
                                                         cfg.stage1.BEST_MODEL_NAME))
-        
+    
+    ms_ssim = MultiScaleSSIMMetric(spatial_dims=2, data_range=1.0)
+
+    print("Computing MS-SSIM...")
+    ms_ssim_list = []
+    for batch in tqdm(val_loader, total=len(val_loader)):
+        x = batch["image"].to(device)
+
+        with torch.no_grad():
+            x_recon = model.reconstruct(x)
+
+        ms_ssim_list.append(ms_ssim(x, x_recon))
+
+    ms_ssim_list = torch.cat(ms_ssim_list, dim=0)1
+    print(f"Mean MS-SSIM: {ms_ssim_list.mean():.6f}")
+      
