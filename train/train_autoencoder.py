@@ -201,6 +201,6 @@ def train_autoencoder(cfg, train_dataset, valid_dataset):
 
         ms_ssim_list.append(ms_ssim(x, x_recon))
 
-    ms_ssim_list = torch.cat(ms_ssim_list, dim=0)1
+    ms_ssim_list = torch.cat(ms_ssim_list, dim=0)
     print(f"Mean MS-SSIM: {ms_ssim_list.mean():.6f}")
       
