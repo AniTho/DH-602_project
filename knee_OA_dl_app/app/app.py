@@ -45,9 +45,9 @@ def save_and_display_gradcam(img, heatmap, alpha=0.4):
     return superimposed_img
 
 
-icon = Image.open("app/img/mdc.png")
+icon = Image.open("app/img/iitb_logo.png")
 st.set_page_config(
-    page_title="Severity Analysis of Arthrosis in the Knee",
+    page_title="Knee OA Severity Analysis",
     page_icon=icon,
 )
 
@@ -71,15 +71,17 @@ grad_model = tf.keras.models.Model(
 # Sidebar
 with st.sidebar:
     st.image(icon)
-    st.subheader("Final Project - MDC013")
-    st.caption("=== Fernanda Rodriguez ===")
+    st.markdown("""
+    <h2 style='text-align: center; font-size: 24px;'>Team PADMA</h2>
+    """, unsafe_allow_html=True)
+    st.caption("===DH 602 Course Project===")
 
     st.subheader(":arrow_up: Upload image")
     uploaded_file = st.file_uploader("Choose x-ray image")
 
 
 # Body
-st.header("Severity Analysis of Arthrosis in the Knee")
+st.header("Knee Osteoarthritis Severity Analysis")
 
 col1, col2 = st.columns(2)
 y_pred = None
@@ -122,7 +124,7 @@ if uploaded_file is not None:
 
     if y_pred is not None:
         with col2:
-            st.subheader(":mag: Explainability")
+            st.subheader(":mag: GradCAM")
             heatmap = make_gradcam_heatmap(grad_model, img_array)
             image = save_and_display_gradcam(img, heatmap)
             st.image(image, use_column_width=True)
