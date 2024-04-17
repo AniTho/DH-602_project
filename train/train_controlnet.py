@@ -87,12 +87,12 @@ def train_control(cfg, train_dataset, valid_dataset):
                                     truncation=True,return_tensors="pt")['input_ids']
             prompt_input = prompt_input.to(device)
             timesteps = torch.randint(0, scheduler.num_train_timesteps, 
-                                      (images.shape[0],), device=device).long()
+                                      (hint.shape[0],), device=device).long()
 
             optimizer.zero_grad()
             with autocast(enabled=True):
                 with torch.no_grad():
-                    e = auto_sampler(images) * cfg.ldm.scale_factor
+                    e = auto_sampler(hint) * cfg.ldm.scale_factor
 
                 prompt_embeds = text_encoder(prompt_input.squeeze(1))
                 prompt_embeds = prompt_embeds[0]
@@ -102,7 +102,7 @@ def train_control(cfg, train_dataset, valid_dataset):
                 down_block_res_samples, mid_block_res_sample = controlnet(
                                                     x=noisy_e, timesteps=timesteps, 
                                                     context=prompt_embeds, 
-                                                    controlnet_cond=hint
+                                                    controlnet_cond=images
                                                     )
                 noise_pred = diffusion_model(x=noisy_e, timesteps=timesteps, 
                                             down_block_additional_residuals=down_block_res_samples,
@@ -155,16 +155,16 @@ def train_control(cfg, train_dataset, valid_dataset):
                                         truncation=True,return_tensors="pt")['input_ids']
                 prompt_input = prompt_input.to(device)
                 timesteps = torch.randint(0, scheduler.num_train_timesteps, 
-                                          (images.shape[0],), device=device).long()
+                                          (hint.shape[0],), device=device).long()
 
                 with autocast(enabled=True):
-                    e = auto_sampler(images) * cfg.ldm.scale_factor
+                    e = auto_sampler(hint) * cfg.ldm.scale_factor
 
                     prompt_embeds = text_encoder(prompt_input.squeeze(1))
                     prompt_embeds = prompt_embeds[0]
                     
                     if idx == random_idx:
-                        cond = hint
+                        cond = images
                         prompt_cond_embed = prompt_embeds
                         prompt = caption
 
@@ -174,7 +174,7 @@ def train_control(cfg, train_dataset, valid_dataset):
                     down_block_res_samples, mid_block_res_sample = controlnet(
                                                 x=noisy_e, timesteps=timesteps, 
                                                 context=prompt_embeds, 
-                                                controlnet_cond=hint)
+                                                controlnet_cond=images)
 
                     noise_pred = diffusion_model(x=noisy_e, timesteps=timesteps,
                                                 context=prompt_embeds,
