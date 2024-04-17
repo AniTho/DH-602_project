@@ -150,10 +150,12 @@ if uploaded_file is not None:
             ":arrows_counterclockwise: Predict Arthrosis in the Knee"
         ):
             model_prediction(model)
-            
+            model_prediction(model)
+            model_prediction(model)
+            model_prediction(model)
 
-    if y_pred is not None:
-        with col2:
+    # if y_pred is not None:
+    with col2:
             gradcam_output(model)
             gradcam_output(model)
             gradcam_output(model)

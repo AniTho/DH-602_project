@@ -88,7 +88,7 @@ y_pred = None
 
 if uploaded_file is not None:
     with col1:
-        st.subheader(":camera: Input")
+        st.subheader(":camera: Input")s
         st.image(uploaded_file, use_column_width=True)
 
         img = tf.keras.preprocessing.image.load_img(
@@ -124,7 +124,7 @@ if uploaded_file is not None:
 
     if y_pred is not None:
         with col2:
-            st.subheader(":mag: GradCAM")
+            st.subheader(":mag: Explainability")
             heatmap = make_gradcam_heatmap(grad_model, img_array)
             image = save_and_display_gradcam(img, heatmap)
             st.image(image, use_column_width=True)
