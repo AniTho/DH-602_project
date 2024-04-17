@@ -19,6 +19,8 @@ def main(cfg):
         cfg.ldm.scale_factor = scaling_factor.item()
         train_diffusion(cfg, train_dataset, valid_dataset)
     elif cfg.TRAIN_CONTROL:
+        scaling_factor = ldm_scaling_factor(cfg, train_dataset)
+        cfg.ldm.scale_factor = scaling_factor.item()
         train_control(cfg, train_dataset, valid_dataset)
 
 if __name__ == "__main__":

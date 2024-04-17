@@ -1,6 +1,6 @@
 from generative.networks.nets import AutoencoderKL
 from generative.networks.nets.patchgan_discriminator import PatchDiscriminator
-from generative.networks.nets import DiffusionModelUNet
+from generative.networks.nets import DiffusionModelUNet, ControlNet
 from generative.networks.schedulers import DDPMScheduler
 from torch import nn
 
@@ -25,3 +25,6 @@ def build_diffusion_model(cfg):
 
 def build_scheduler(cfg):
     return DDPMScheduler(**cfg.ldm.scheduler)
+
+def build_controlnet(cfg):
+    return ControlNet(**cfg.controlnet.params)

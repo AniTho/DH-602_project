@@ -1,8 +1,8 @@
 DATASET: KneeOA
 DATASET_PATH: ./datasets/knee_kaggle
-TRAIN_VAE: True
+TRAIN_VAE: False
 TRAIN_DIFF: False
-TRAIN_CONTROL: False
+TRAIN_CONTROL: True
 
 TRAIN:
   SEED: 42
@@ -71,3 +71,19 @@ ldm:
 
 text_encoder:
   model_name: "stabilityai/stable-diffusion-2-1-base"
+
+controlnet:
+  base_lr: 0.000025
+  CHECKPOINT_NAME: 'checkpoint_controlnet.ckpt'
+  BEST_MODEL_NAME: 'best_model_controlnet.pth'
+  params:
+    spatial_dims: 2
+    in_channels: 3
+    num_res_blocks: 2
+    num_channels: [256, 512, 768]
+    attention_levels: [False, True, True]
+    with_conditioning: True
+    cross_attention_dim: 1024
+    num_head_channels: [0, 512, 768]
+    conditioning_embedding_in_channels: 1
+    conditioning_embedding_num_channels: [64, 128, 128, 256]
