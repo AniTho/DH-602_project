@@ -1,19 +1,28 @@
 DATASET: KneeOA
-DATASET_PATH: ./datasets/knee_kaggle
+DATASET_PATH: ./datasets/
 TRAIN_VAE: False
 TRAIN_DIFF: False
-TRAIN_CONTROL: True
+TRAIN_CONTROL: False
+TRAIN_CLS_MODEL: True
 
 TRAIN:
   SEED: 42
-  BATCH_SIZE: 8
-  NUM_WORKERS: 4
+  BATCH_SIZE: 128
+  NUM_WORKERS: 8
   PIN_MEMORY: True
   NUM_EPOCHS: 100
   MODEL_PATH: ./checkpoints
+  LR: 1e-3
+  MIN_LR: 1e-6
+  PATIENCE: 2
+  FACTOR: 0.05
 
 DATA:
   IMAGE_SIZE: 224
+  LONG_TAILED: 'LT'
+
+MODEL:
+  BACKBONE: vit_base_patch16_224      # resnet50, xception, inception_resnet_v2, vit_base_patch16_224
 
 stage1:
   loss: 'mae' # 'mae' or 'mse'

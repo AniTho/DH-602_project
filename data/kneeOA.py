@@ -42,5 +42,5 @@ class KneeOADataset(Dataset):
         if self.transform:
             img = self.transform(img)
             prog_img = self.transform(prog_img)
-        return dict(image = img, prompt = prompt_text, kl_grade = kl_grade,
+        return dict(image = img, prompt = prompt_text, kl_grade = int(kl_grade),
                     hint = prog_img)

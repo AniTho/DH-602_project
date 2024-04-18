@@ -10,7 +10,7 @@ import numpy as np
 
 def get_transforms(cfg):
     return transforms.Compose([
-        transforms.Resize(cfg.DATA.IMAGE_SIZE),
+        transforms.Resize((cfg.DATA.IMAGE_SIZE, cfg.DATA.IMAGE_SIZE)),
         transforms.ToTensor(),
     ])
     
