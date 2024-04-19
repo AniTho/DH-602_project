@@ -7,15 +7,16 @@ TRAIN_CLS_MODEL: True
 
 TRAIN:
   SEED: 42
-  BATCH_SIZE: 128
+  BATCH_SIZE: 32
   NUM_WORKERS: 8
   PIN_MEMORY: True
   NUM_EPOCHS: 100
   MODEL_PATH: ./checkpoints
   LR: 1e-3
   MIN_LR: 1e-6
-  PATIENCE: 2
+  PATIENCE: 4
   FACTOR: 0.05
+  SCHEDULER: 'CosineAnnealingLR' # ReduceLROnPlateau, CosineAnnealingLR
 
 DATA:
   IMAGE_SIZE: 224

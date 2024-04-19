@@ -45,7 +45,10 @@ def train_classification_model(cfg, train_dataset, valid_dataset, test_dataset):
 
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.AdamW(model.parameters(), lr=float(cfg.TRAIN.LR))
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, verbose=True, patience=cfg.TRAIN.PATIENCE, factor=cfg.TRAIN.FACTOR, min_lr=float(cfg.TRAIN.MIN_LR))
+    if cfg.TRAIN.SCHEDULER == 'ReduceLROnPlateau':
+        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=cfg.TRAIN.PATIENCE, factor=cfg.TRAIN.FACTOR, min_lr=float(cfg.TRAIN.MIN_LR), verbose=True)
+    elif cfg.TRAIN.SCHEDULER == 'CosineAnnealingLR':
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0 = 10, eta_min=float(cfg.TRAIN.MIN_LR))
 
     def train_model():
         model.train()
@@ -53,8 +56,8 @@ def train_classification_model(cfg, train_dataset, valid_dataset, test_dataset):
         start_time = time()
         for epoch in range(epochs):
             running_loss = 0.0
-            loop = tqdm(train_loader, total=len(train_loader))
-            for batch in loop:
+            loop = tqdm(enumerate(train_loader), total=len(train_loader))
+            for i, batch in loop:
                 inputs, labels = batch['image'], batch['kl_grade']
                 if inputs.size(1) == 1:  
                     inputs = inputs.repeat(1, 3, 1, 1)
@@ -64,9 +67,16 @@ def train_classification_model(cfg, train_dataset, valid_dataset, test_dataset):
                 loss = criterion(outputs, labels)
                 loss.backward()
                 optimizer.step()
+                
+                if cfg.TRAIN.SCHEDULER == 'CosineAnnealingLR':
+                    scheduler.step(epoch + i / len(train_loader))
+                
                 running_loss += loss.item() * inputs.size(0)
                 loop.set_description(f'Epoch [{epoch+1}/{epochs}]')
                 loop.set_postfix(loss=running_loss / len(train_dataset))
+                
+                current_lr = optimizer.param_groups[0]['lr']
+                wandb.log({"learning_rate": current_lr})
 
             train_loss = running_loss / len(train_dataset)
             val_loss, val_class_accuracies = evaluate(valid_loader, log_classwise=True)
