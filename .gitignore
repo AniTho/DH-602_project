@@ -163,3 +163,6 @@ datasets
 stable_diffusion_weights
 wandb
 generated_imgs
+checkpoints
+images
+models
